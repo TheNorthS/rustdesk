@@ -59,15 +59,31 @@ class _DesktopHomePageState extends State<DesktopHomePage>
   Widget build(BuildContext context) {
     super.build(context);
     final isIncomingOnly = bind.isIncomingOnly();
-    return _buildBlock(
-        child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        buildLeftPane(context),
-        if (!isIncomingOnly) const VerticalDivider(width: 1),
-        if (!isIncomingOnly) Expanded(child: buildRightPane(context)),
-      ],
-    ));
+    return Container(
+    // 添加背景图片
+    decoration: BoxDecoration(
+      image: DecorationImage(
+        image: AssetImage("assets/background.jpg"), // 图片路径
+        fit: BoxFit.cover, // 适应方式（cover 铺满，contain 保持比例）
+        // 可选：调整透明度
+        colorFilter: ColorFilter.mode(
+          Colors.black.withOpacity(0.1), // 透明度 0.1（0-1）
+          BlendMode.dstATop,
+        ),
+      ),
+    ),
+    // 原有的界面内容
+    child: _buildBlock(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          buildLeftPane(context),
+          if (!isIncomingOnly) const VerticalDivider(width: 1),
+          if (!isIncomingOnly) Expanded(child: buildRightPane(context)),
+        ],
+      ),
+    ),
+  );
   }
 
   Widget _buildBlock({required Widget child}) {
